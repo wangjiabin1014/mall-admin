@@ -1,0 +1,61 @@
+.home {
+    .menu-list {
+        position: fixed;
+        width: 180px;
+        height: 100%;
+
+        .ant-menu {
+            height: 100%;
+        }
+    }
+
+    .main-app {
+        margin-left: 180px;
+        transition: all .3s;
+
+        &.menu-unfold {
+            margin-left: 80px;
+        }
+
+        .menu-header {
+            height: 50px;
+            line-height: 50px;
+            border-bottom: 1px solid #eee;
+            padding: 0 10px;
+
+            .breadcrumb {
+                display: inline-block;
+                margin-left: 20px;
+            }
+
+            .user-info {
+                float: right;
+                cursor: pointer;
+                text-align: center;
+
+                .item:not(:first-child) {
+                    display: none;
+                    height: 30px;
+                    line-height: 30px;
+
+                    &:hover {
+                        background-color: #eee;
+                        border-radius: 6px;
+                        color: #999;
+                        font-weight: bold;
+                    }
+                }
+
+                .item{
+                    padding: 0 25px;
+                }
+
+                &:hover {
+                    .item {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+}
