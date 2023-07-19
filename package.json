@@ -15,7 +15,11 @@
     "less": "^4.1.3",
     "less-loader": "^4.1.0",
     "vue": "^2.6.11",
+<<<<<<< HEAD
     "vue-router": "^2.8.0",
+=======
+    "vue-router": "^3.2.0",
+>>>>>>> 4e95d7ebd4bcd59e07dd1f6a7a5db08a47976514
     "vuex": "^3.4.0"
   },
   "devDependencies": {

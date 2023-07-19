@@ -5,7 +5,11 @@ const instance = axios.create({
 })
 
 instance.interceptors.request.use((config) => {
+<<<<<<< HEAD
     // console.log(config)
+=======
+    console.log(config)
+>>>>>>> 4e95d7ebd4bcd59e07dd1f6a7a5db08a47976514
     return config
 }, (error) => Promise.reject(error))
 
