@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // 预加载
-import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
 
 import store from '../store/index.js'
 
@@ -15,15 +13,19 @@ const asyncRouterMap = [
     path: '/product',
     name: 'Product',
     mate: {
-      title: '商品'
+      title: '商品',
+      hidden: false,
+      icon: 'inbox'
     },
-    component: Home,
+    component: () => import('../views/Home.vue'),
     children: [
       {
         path: 'list',
         name: 'ProductList',
         mate: {
-          title: '商品列表'
+          title: '商品列表',
+          hidden: false,
+          icon: 'unordered-list'
         },
         component: () => import('../components/ProductList.vue')
       },
@@ -31,7 +33,9 @@ const asyncRouterMap = [
         path: 'add',
         name: 'ProductAdd',
         mate: {
-          title: '添加商品'
+          title: '添加商品',
+          hidden: false,
+          icon: 'file-add'
         },
         component: () => import('../components/ProductAdd.vue')
       },
@@ -39,7 +43,9 @@ const asyncRouterMap = [
         path: 'category',
         name: 'Category',
         mate: {
-          title: '类目管理'
+          title: '类目管理',
+          hidden: false,
+          icon: 'project'
         },
         component: () => import('../components/Category.vue')
       }
@@ -47,8 +53,6 @@ const asyncRouterMap = [
   }
 ]
 
-import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
@@ -56,17 +60,20 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: () => import('../views/Home.vue'),
     mate: {
       title: '首页',
-      hidden: false
+      hidden: false,
+      icon: 'home'
     },
     children: [
       {
         path: 'index',
         name: 'Index',
         mate: {
-          title: '统计'
+          title: '统计',
+          hidden: false,
+          icon: 'number'
         },
         // 懒加载
         component: () => import('../components/Index.vue')
@@ -80,7 +87,7 @@ const routes = [
       title: '登录',
       hidden: true
     },
-    component: Login
+    component: () => import('../views/Login.vue')
   },
   // {
   //   path: '/about',
@@ -90,18 +97,6 @@ const routes = [
   //   // which is lazy-loaded when the route is visited.
   //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   // }
-  {
-    path: '/login',
-    component: Login
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
 ]
 
 const router = new VueRouter({
@@ -116,9 +111,10 @@ router.beforeEach((to, from, next) => {
     if (store.state.user.appkey && store.state.user.username && store.state.user.role) {
       if (!isAddRoute) {
         const menuRoutes = getMenuRoute(store.state.user.role, asyncRouterMap)
-        router.addRoutes(menuRoutes)
-        console.log(menuRoutes)
-        store.dispatch('changeMenuRoutes', routes.concat(menuRoutes))
+        store.dispatch('changeMenuRoutes', routes.concat(menuRoutes)).then(() => {
+          router.addRoutes(menuRoutes)
+          next()
+        })
         isAddRoute = true
       }
       return next()

@@ -4,18 +4,16 @@
             <a-icon :type="$store.state.collapsed ? 'menu-unfold' : 'menu-fold'" />
         </a-button>
         <div class="breadcrumb">
-            <a-breadcrumb>
-                <a-breadcrumb-item>首页</a-breadcrumb-item>
-                <a-breadcrumb-item><a href="">统计</a></a-breadcrumb-item>
+            <a-breadcrumb v-if="currentRoutes.length > 1">
+                <a-breadcrumb-item>{{ currentRoutes[0] ? currentRoutes[0].meta.title : '' }}</a-breadcrumb-item>
+                <a-breadcrumb-item><a href="">{{ currentRoutes[1] ? currentRoutes[1].meta.title : ''
+                }}</a></a-breadcrumb-item>
             </a-breadcrumb>
         </div>
         <ul class="user-info">
             <li class="item">欢迎{{ $store.state.user.username }}！<a-icon type="down" /></li>
-<<<<<<< HEAD
             <li class="item" @click="logout">退出</li>
-=======
             <li class="item">退出</li>
->>>>>>> 4e95d7ebd4bcd59e07dd1f6a7a5db08a47976514
         </ul>
     </div>
 </template>
@@ -24,19 +22,23 @@
 export default {
     data() {
         return {
-
+            currentRoutes: this.$router.currentRoute.matched
+        }
+    },
+    watch: {
+        $route() {
+            console.log('====',this.$router)
+            this.currentRoutes = this.$router.currentRoute.matched
+            console.log(this.$router.currentRoute.matched)
         }
     },
     methods: {
         toggleCollapsed() {
             this.$store.dispatch('changeCollapsed')
-<<<<<<< HEAD
         },
-        logout(){
+        logout() {
             this.$store.dispatch('logout')
-            this.$router.push({name:'Login'})
-=======
->>>>>>> 4e95d7ebd4bcd59e07dd1f6a7a5db08a47976514
+            this.$router.push({ name: 'Login' })
         }
     }
 }

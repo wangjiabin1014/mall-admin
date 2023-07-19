@@ -12,7 +12,6 @@ export default new Vuex.Store({
     user: getUserCookie(),
     // 存储菜单的路由
     menuRoutes: [],
-    user: getUserCookie()
   },
   mutations: {
     changeCollapsed(state) {
